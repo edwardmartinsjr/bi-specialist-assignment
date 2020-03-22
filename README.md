@@ -45,4 +45,6 @@ POSTGRES_NAME='XXX'
  ## Python version:
  Python 3.6.8 :: Anaconda, Inc.
 
+ - Problems with dyld: Library not loaded goto: https://github.com/kelaberetiv/TagUI/issues/86
+
 

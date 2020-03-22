@@ -7,6 +7,7 @@ import subprocess
 import logging
 from sqlalchemy import create_engine
 import pandas as pd
+import uuid
 
 # Twitter 
 consumer_key = os.environ['CONSUMER_KEY']
@@ -29,11 +30,8 @@ LOG = logging.getLogger(__name__)
 # Online-Tool to create boxes (c+p as raw CSV): http://boundingbox.klokantech.com/
 GEOBOX_NETHERLANDS = [3.0761845666, 51.0227615064, 7.288878522, 53.9033167283]
 
-def get_dbh():
-    # Connect to DB
-    conn = 'postgresql://%s:%s@%s:%d/%s' % (db_user, db_password, db_host,
-                                            db_port, db_name)
-    return create_engine(conn, encoding='utf-8')
+# Set Postgres
+engine = create_engine('postgresql://%s:%s@%s:%s/%s' % (db_user, db_password, db_host, db_port, db_name))
 
 def set_logger(debug):
     fh = logging.StreamHandler()
@@ -49,8 +47,11 @@ def set_logger(debug):
 # Tweepy class to access Twitter API
 class Streamlistener(tweepy.StreamListener):
 	def on_connect(self):
+		
+		# Get streamming for 60 seconds and exit
 		self.start_time = time.time()
 		self.limit = 60
+
 		LOG.info('You are connected to the Twitter API')
 
 
@@ -70,7 +71,8 @@ class Streamlistener(tweepy.StreamListener):
 					username = raw_data['user']['screen_name']
 					created_at = parser.parse(raw_data['created_at'])
 					tweet = raw_data['text']
-					retweet_count = raw_data['retweet_count']
+					retweets = raw_data['retweet_count']
+					location = raw_data['user']['location']
 
 					if raw_data['place'] is not None:
 						place = raw_data['place']['country']
@@ -78,12 +80,28 @@ class Streamlistener(tweepy.StreamListener):
 					else:
 						place = None
 					
-
-					location = raw_data['user']['location']
-
-					
-					LOG.info('\n USERNAME: %s \n TWEET: %s \n RETWEET: %d \n PLACE: %s \n LOCATION: %s',username, tweet, retweet_count, place, location)
+					LOG.info('\n USERNAME: %s \n TWEET: %s \n RETWEET: %d \n LOCATION: %s',username, tweet, retweets, location)
 					LOG.info(' Tweet colleted at: {} \n'.format(str(created_at)))
+					
+					# Prepares the data in a structured format
+					data = []
+					data.append({
+						'key':uuid.uuid4(), 
+                        'username':username, 
+                        'tweet':tweet,
+                        'retweets':retweets,
+						'location':location,
+						'created_at':str(created_at)})
+					
+					# Transformation
+					columns=['key', 'username', 'tweet', 'retweets', 'location', 'created_at']
+					df = pd.DataFrame(data, columns = columns)
+					df['created_at'] = pd.to_datetime(df['created_at'])
+					df['created_at'] = df['created_at'].dt.strftime('%Y-%m-%d %H:%M:S')
+					df['retweets'] = pd.to_numeric(df['retweets'])
+
+					# Stores the data in a Database
+					df.to_sql(con=engine, name='twitter_stream', if_exists='append', index=False)
 
 			except BaseException as e:
 				LOG.error(e)
