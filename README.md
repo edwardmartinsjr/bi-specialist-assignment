@@ -8,7 +8,7 @@ This assignment consists of three parts:
 
 # Architecture
 
-From Twitter API to Pub/Sub to Dataflow to BigQuery
+From Twitter API to Python to Postgres
 
 
 ## Configuration
@@ -27,6 +27,7 @@ POSTGRES_HOST           | Postgres host
 POSTGRES_PORT           | Postgres port
 POSTGRES_NAME           | Postgres database name
 
+## Run
 Set hourly job in crontab, eg:
 `sudo crontab -e -u username`
 ```
@@ -42,9 +43,11 @@ POSTGRES_NAME='XXX'
  30 * * * * /usr/bin/python /Users/username/Projects/Zoover/main.py >> ~/cron.log 2>&1
  ```
 
+ Running at once:
+ `python main.py`
+
  ## Python version:
  Python 3.6.8 :: Anaconda, Inc.
-
- - Problems with dyld: Library not loaded goto: https://github.com/kelaberetiv/TagUI/issues/86
+ - Problems with dyld: Library not loaded? Go to: https://github.com/kelaberetiv/TagUI/issues/86
 
 
