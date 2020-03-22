@@ -86,10 +86,10 @@ class Streamlistener(tweepy.StreamListener):
 					# Prepares the data in a structured format
 					data = []
 					data.append({
-						'key':uuid.uuid4(), 
-                        'username':username, 
-                        'tweet':tweet,
-                        'retweets':retweets,
+						'key':uuid.uuid4(),
+						'username':username,
+						'tweet':tweet,
+						'retweets':retweets,
 						'location':location,
 						'created_at':str(created_at)})
 					
