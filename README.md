@@ -37,7 +37,10 @@ Docking postgres:
 Install application dependencies:
 `pip install -r requirements.txt`
 
-Set hourly job in crontab, eg:
+Ask for help:
+`python main.py --help`
+
+Running in a crontab, set time job, eg:
 `sudo crontab -e -u username`
 ```
 CONSUMER_KEY='XXX'
@@ -49,11 +52,9 @@ POSTGRES_PASSWORD='XXX'
 POSTGRES_HOST='XXX'
 POSTGRES_PORT='XXX'
 POSTGRES_NAME='XXX'
- 30 * * * * /usr/bin/python /Users/username/Projects/bi-specialist-assignment/main.py >> ~/cron.log 2>&1
+ 30 * * * * /usr/bin/python /Users/username/Projects/bi-specialist-assignment/main.py --track word-to-track >> ~/cron.log 2>&1
  ```
 
-OR 
- 
 Running at once:
 ```
 export CONSUMER_KEY=XXX
@@ -66,7 +67,7 @@ export POSTGRES_HOST=XXX
 export POSTGRES_PORT=XXX
 export POSTGRES_NAME=XXX
 ```
- `python main.py`
+ `python main.py --track word-to-track`
 
  ## Python version:
  Python 3.6.8 :: Anaconda, Inc.

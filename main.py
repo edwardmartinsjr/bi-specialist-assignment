@@ -8,6 +8,8 @@ import logging
 from sqlalchemy import create_engine
 import pandas as pd
 import uuid
+import argparse
+from argparse import RawTextHelpFormatter
 
 # Twitter 
 consumer_key = os.environ['CONSUMER_KEY']
@@ -32,6 +34,13 @@ GEOBOX_NETHERLANDS = [3.0761845666, 51.0227615064, 7.288878522, 53.9033167283]
 
 # Set Postgres
 engine = create_engine('postgresql://%s:%s@%s:%s/%s' % (db_user, db_password, db_host, db_port, db_name))
+
+def parse_args():
+	parser = argparse.ArgumentParser(description='BI Specialist Assignment',formatter_class=RawTextHelpFormatter)
+	
+	parser.add_argument('-t', '--track', type=str, help='python main.py --track word-to-track')
+
+	return parser.parse_args()
 
 def set_logger(debug):
     fh = logging.StreamHandler()
@@ -94,13 +103,16 @@ class Streamlistener(tweepy.StreamListener):
 						'created_at':str(created_at)})
 					
 					# Transformation
+					# converting created_at to datetime 
 					columns=['key', 'username', 'tweet', 'retweets', 'location', 'created_at']
 					df = pd.DataFrame(data, columns = columns)
 					df['created_at'] = pd.to_datetime(df['created_at'])
 					df['created_at'] = df['created_at'].dt.strftime('%Y-%m-%d %H:%M:S')
+					
+					# converting number of retweets to numeric
 					df['retweets'] = pd.to_numeric(df['retweets'])
 
-					# Stores the data in a Database
+					# Stores the data in a Database (append mode)
 					df.to_sql(con=engine, name='twitter_stream', if_exists='append', index=False)
 
 			except BaseException as e:
@@ -110,6 +122,11 @@ class Streamlistener(tweepy.StreamListener):
 
 if __name__== '__main__':
 	set_logger(True)
+
+	args = parse_args()
+	if args.track is None:
+		LOG.error(argparse.ArgumentTypeError('--track is required, eg: python main.py --track word-to-track'))
+		os._exit(1)
 	
 	LOG.info('Start Twitter Stream Listener')
 
@@ -126,5 +143,6 @@ if __name__== '__main__':
 	stream = tweepy.Stream(auth, listener = listener)
 
 	# Choose what we want to filter by
-	track = ['all-inclusive']
+	track = [args.track]
+	LOG.info('Tracking: %s', track)
 	stream.filter(track = track, languages = ['en', 'nl'], locations = GEOBOX_NETHERLANDS)
