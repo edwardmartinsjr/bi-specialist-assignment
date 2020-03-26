@@ -1,12 +1,11 @@
 import tweepy
-import pandas as pd
 from dateutil import parser
 import time
-import store
 import uuid
 import json
 import log
 import store
+import prep
 
 # Tweepy class to access Twitter API
 class Streamlistener(tweepy.StreamListener):
@@ -43,7 +42,7 @@ class Streamlistener(tweepy.StreamListener):
                     else:
                         place = None
                         
-                    log.logger.info('\n USERNAME: %s \n TWEET: %s \n RETWEET: %d \n LOCATION: %s',username, tweet, retweets, location)
+                    log.logger.info('USERNAME: %s \n TWEET: %s \n RETWEET: %d \n LOCATION: %s',username, tweet, retweets, location)
                     log.logger.info(' Tweet colleted at: {} \n'.format(str(created_at)))
                     
                     # Prepares the data in a structured format
@@ -57,14 +56,7 @@ class Streamlistener(tweepy.StreamListener):
                         'created_at':str(created_at)})
                     
                     # Transformation
-                    # converting created_at to datetime
-                    columns=['key', 'username', 'tweet', 'retweets', 'location', 'created_at']
-                    df = pd.DataFrame(data, columns = columns)
-                    df['created_at'] = pd.to_datetime(df['created_at'])
-                    df['created_at'] = df['created_at'].dt.strftime('%Y-%m-%d %H:%M:S')
-                    
-                    # converting number of retweets to numeric
-                    df['retweets'] = pd.to_numeric(df['retweets'])
+                    df = prep.transform(data)
                     
                     # Stores the data in a Database
                     store.save_data(df)
