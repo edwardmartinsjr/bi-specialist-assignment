@@ -1,4 +1,4 @@
-## Zoover - BI Specialist Assignment - Streaming ETL Process:
+## BI Specialist Assignment - Streaming ETL Process:
 
 This assignment consists of three parts:
 - Connects to Twitter API
