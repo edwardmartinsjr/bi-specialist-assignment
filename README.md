@@ -28,6 +28,9 @@ POSTGRES_PORT           | Postgres port
 POSTGRES_NAME           | Postgres database name
 
 ## Run
+Install dependencies:
+`pip install -r requirements.txt`
+
 Set hourly job in crontab, eg:
 `sudo crontab -e -u username`
 ```
