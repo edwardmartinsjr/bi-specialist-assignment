@@ -36,8 +36,7 @@ GEOBOX_NETHERLANDS = [3.0761845666, 51.0227615064, 7.288878522, 53.9033167283]
 engine = create_engine('postgresql://%s:%s@%s:%s/%s' % (db_user, db_password, db_host, db_port, db_name))
 
 def parse_args():
-	parser = argparse.ArgumentParser(description='BI Specialist Assignment',formatter_class=RawTextHelpFormatter)
-	
+	parser = argparse.ArgumentParser(description='BI Specialist Assignment',formatter_class=RawTextHelpFormatter)	
 	parser.add_argument('-t', '--track', type=str, help='python main.py --track word-to-track')
 
 	return parser.parse_args()
