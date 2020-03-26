@@ -28,7 +28,13 @@ POSTGRES_PORT           | Postgres port
 POSTGRES_NAME           | Postgres database name
 
 ## Run
-Install dependencies:
+Create a twitter app:
+`https://iag.me/socialmedia/how-to-create-a-twitter-app-in-8-easy-steps/`
+
+Docking postgres:
+`https://hub.docker.com/_/postgres/`
+
+Install application dependencies:
 `pip install -r requirements.txt`
 
 Set hourly job in crontab, eg:
@@ -46,7 +52,20 @@ POSTGRES_NAME='XXX'
  30 * * * * /usr/bin/python /Users/username/Projects/bi-specialist-assignment/main.py >> ~/cron.log 2>&1
  ```
 
- Running at once:
+OR 
+ 
+Running at once:
+```
+export CONSUMER_KEY=XXX
+export CONSUMER_SECRET=XXX
+export ACCESS_TOKEN=XXX
+export ACCESS_TOKEN_SECRET=XXX
+export POSTGRES_USER=XXX
+export POSTGRES_PASSWORD=XXX
+export POSTGRES_HOST=XXX
+export POSTGRES_PORT=XXX
+export POSTGRES_NAME=XXX
+```
  `python main.py`
 
  ## Python version:
