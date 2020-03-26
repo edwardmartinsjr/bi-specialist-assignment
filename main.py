@@ -61,7 +61,6 @@ class Streamlistener(tweepy.StreamListener):
 
 		LOG.info('You are connected to the Twitter API')
 
-
 	def on_error(self, status):
 		if status != 200:
 			LOG.error('error found: {}'.format(status) )
