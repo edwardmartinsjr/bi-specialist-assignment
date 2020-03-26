@@ -8,7 +8,8 @@ This assignment consists of three parts:
 
 # Architecture
 
-From Twitter API to Python to Postgres
+From Twitter API to Python to Postgres:
+![Architecture](https://github.com/edwardmartinsjr/bi-specialist-assignment/blob/master/architecture.png)
 
 
 ## Configuration
