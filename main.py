@@ -55,7 +55,6 @@ def set_logger(debug):
 # Tweepy class to access Twitter API
 class Streamlistener(tweepy.StreamListener):
 	def on_connect(self):
-		
 		# Get streamming for 60 seconds and exit
 		self.start_time = time.time()
 		self.limit = 60
