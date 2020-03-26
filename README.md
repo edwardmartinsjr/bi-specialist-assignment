@@ -40,7 +40,7 @@ POSTGRES_PASSWORD='XXX'
 POSTGRES_HOST='XXX'
 POSTGRES_PORT='XXX'
 POSTGRES_NAME='XXX'
- 30 * * * * /usr/bin/python /Users/username/Projects/Zoover/main.py >> ~/cron.log 2>&1
+ 30 * * * * /usr/bin/python /Users/username/Projects/bi-specialist-assignment/main.py >> ~/cron.log 2>&1
  ```
 
  Running at once:
