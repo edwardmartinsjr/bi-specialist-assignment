@@ -45,7 +45,7 @@ class Streamlistener(tweepy.StreamListener):
                     log.logger.info('USERNAME: %s \n TWEET: %s \n RETWEET: %d \n LOCATION: %s',username, tweet, retweets, location)
                     log.logger.info(' Tweet colleted at: {} \n'.format(str(created_at)))
                     
-                    # Prepares the data in a structured format
+                    # appends data in a structured format
                     data = []
                     data.append({
                         'key':uuid.uuid4(),
