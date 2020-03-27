@@ -1,5 +1,5 @@
 import pandas as pd
-import log
+import util
 
 def transform(data):
     columns=['key', 'username', 'tweet', 'retweets', 'location', 'created_at']
@@ -12,6 +12,6 @@ def transform(data):
         # converting number of retweets to numeric
         df['retweets'] = pd.to_numeric(df['retweets'])
     except BaseException as e:
-        log.logger.error(e)
+        util.logger.error(e)
 
     return df

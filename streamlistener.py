@@ -3,7 +3,7 @@ from dateutil import parser
 import time
 import uuid
 import json
-import log
+import util
 import store
 import prep
 
@@ -15,11 +15,11 @@ class Streamlistener(tweepy.StreamListener):
         self.start_time = time.time()
         self.limit = 60
 
-        log.logger.info('You are connected to the Twitter API')
+        util.logger.info('You are connected to the Twitter API')
 
     def on_error(self, status):
         if status != 200:
-            log.logger.error('error found: {}'.format(status) )
+            util.logger.error('error found: {}'.format(status) )
             # Returning false disconnects the stream
             return False
 
@@ -38,12 +38,12 @@ class Streamlistener(tweepy.StreamListener):
                     
                     if raw_data['place'] is not None:
                         place = raw_data['place']['country']
-                        log.logger.info(place)
+                        util.logger.info(place)
                     else:
                         place = None
                         
-                    log.logger.info('USERNAME: %s \n TWEET: %s \n RETWEET: %d \n LOCATION: %s',username, tweet, retweets, location)
-                    log.logger.info(' Tweet colleted at: {} \n'.format(str(created_at)))
+                    util.logger.info('USERNAME: %s \n TWEET: %s \n RETWEET: %d \n LOCATION: %s',username, tweet, retweets, location)
+                    util.logger.info(' Tweet colleted at: {} \n'.format(str(created_at)))
                     
                     # appends data in a structured format
                     data = []
@@ -62,6 +62,6 @@ class Streamlistener(tweepy.StreamListener):
                     store.save_data(df)
             
             except BaseException as e:
-                log.logger.error(e)
+                util.logger.error(e)
         else:
             return False

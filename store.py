@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 import pandas as pd
 import os
-import log
+import util
 
 # Postgres
 db_user = os.environ['POSTGRES_USER']
@@ -18,4 +18,4 @@ def save_data(df):
         # Stores the data in a Database (append mode)
         df.to_sql(con=engine, name='twitter_stream', if_exists='append', index=False)
     except BaseException as e:
-        log.logger.error(e)
+        util.logger.error(e)
