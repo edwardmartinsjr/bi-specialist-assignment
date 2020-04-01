@@ -4,11 +4,11 @@ import time
 import uuid
 import json
 import util
-import store
-import prep
 
 # Tweepy class to access Twitter API
 class Streamlistener(tweepy.StreamListener):
+    # Set dataset
+    dataset = []
     
     def on_connect(self):
         # Get streamming for 60 seconds and exit
@@ -24,7 +24,7 @@ class Streamlistener(tweepy.StreamListener):
             return False
 
     # Reads in tweet data as Json and extracts the data we want.
-    def on_data(self,data):	
+    def on_data(self,data):	        
         if (time.time() - self.start_time) < self.limit:
             try:
                 raw_data = json.loads(data)
@@ -46,20 +46,13 @@ class Streamlistener(tweepy.StreamListener):
                     util.logger.info(' Tweet colleted at: {} \n'.format(str(created_at)))
                     
                     # appends data in a structured format
-                    data = []
-                    data.append({
+                    self.dataset.append({
                         'key':uuid.uuid4(),
                         'username':username,
                         'tweet':tweet,
                         'retweets':retweets,
                         'location':location,
                         'created_at':str(created_at)})
-                    
-                    # Transformation
-                    df = prep.transform(data)
-                    
-                    # Stores the data in a Database
-                    store.save_data(df)
             
             except BaseException as e:
                 util.logger.error(e)

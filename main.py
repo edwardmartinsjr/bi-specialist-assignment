@@ -4,6 +4,8 @@ from argparse import RawTextHelpFormatter
 import tweepy
 from streamlistener import Streamlistener
 import util
+import store
+import prep
 
 # Twitter 
 consumer_key = os.environ['CONSUMER_KEY']
@@ -49,3 +51,13 @@ if __name__== '__main__':
 	track = [args.track]
 	util.logger.info('Tracking: %s', track)
 	stream.filter(track = track, languages = ['en', 'nl'], locations = GEOBOX_NETHERLANDS)
+	
+	# Transformation
+	util.logger.info('Transform Twitter Stream')
+	df = prep.transform(listener.dataset)
+	
+	# Stores the data in a Database
+	util.logger.info('Store Twitter Stream')
+	store.save_data(df)
+
+	util.logger.info('Finish Twitter Stream Listener')
