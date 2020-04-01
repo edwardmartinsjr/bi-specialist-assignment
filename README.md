@@ -74,8 +74,9 @@ Running at Apache Airflow:
 ![Architecture](https://github.com/edwardmartinsjr/bi-specialist-assignment/blob/master/architecture-airflow.png)
 
 Add DAG `airflow-dag\twitter_stream.py` to DAGs folder `/Users/username/airflow/dags` 
-![Airflow](https://github.com/edwardmartinsjr/bi-specialist-assignment/blob/master/graph-view.png)
-![Airflow](https://github.com/edwardmartinsjr/bi-specialist-assignment/blob/master/airflow-dag.png)
+
+![](graph-view.png?raw=true)
+![](airflow-dag.png?raw=true)
 
 ## Python version:
 Python 3.6.8 :: Anaconda, Inc.
