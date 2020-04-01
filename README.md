@@ -54,7 +54,7 @@ POSTGRES_HOST='XXX'
 POSTGRES_PORT='XXX'
 POSTGRES_NAME='XXX'
  30 * * * * /usr/bin/python /Users/username/Projects/bi-specialist-assignment/main.py --track word-to-track >> ~/cron.log 2>&1
- ```
+```
 
 Running at once:
 ```
@@ -68,10 +68,17 @@ export POSTGRES_HOST=XXX
 export POSTGRES_PORT=XXX
 export POSTGRES_NAME=XXX
 ```
- `python main.py --track word-to-track`
+`python main.py --track word-to-track`
 
- ## Python version:
- Python 3.6.8 :: Anaconda, Inc.
- - Problems with dyld: Library not loaded? Go to: https://github.com/kelaberetiv/TagUI/issues/86
+Running at Apache Airflow:
+![Architecture](https://github.com/edwardmartinsjr/bi-specialist-assignment/blob/master/architecture-airflow.png)
+
+Add DAG `airflow-dag\twitter_stream.py` to DAGs folder `/Users/username/airflow/dags` 
+![Airflow](https://github.com/edwardmartinsjr/bi-specialist-assignment/blob/master/graph-view.png)
+![Airflow](https://github.com/edwardmartinsjr/bi-specialist-assignment/blob/master/airflow-dag.png)
+
+## Python version:
+Python 3.6.8 :: Anaconda, Inc.
+- Problems with dyld: Library not loaded? Go to: https://github.com/kelaberetiv/TagUI/issues/86
 
 
