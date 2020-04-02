@@ -42,7 +42,7 @@ args = {
 }
 
 dag = DAG(
-    dag_id='twitter_stream',
+    dag_id='twitter_stream_to_sql',
     default_args=args,
     schedule_interval=timedelta(minutes=2),
 )

@@ -74,7 +74,7 @@ Running at Apache Airflow:
 ![Architecture](https://github.com/edwardmartinsjr/bi-specialist-assignment/blob/master/architecture-airflow.png)
 ![](graph-view.png?raw=true)
 
-Add DAG `airflow-dag\twitter_stream.py` to DAGs folder `/Users/username/airflow/dags` 
+Add DAG `airflow-dag\twitter_stream-to-sql.py` to DAGs folder `/Users/username/airflow/dags` 
 
 
 ## Python version:
